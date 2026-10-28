@@ -13,6 +13,13 @@ Set-Location -LiteralPath $PSScriptRoot
 $GhUserDefault = 'xinjunye747-maker'
 $EmailDefault  = 'xinjunye747@gmail.com'
 
+# gh 默认不在 PATH 里，补上安装目录
+if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
+    foreach ($p in @("$env:ProgramFiles\GitHub CLI", "${env:ProgramFiles(x86)}\GitHub CLI", "$env:LOCALAPPDATA\Programs\GitHubCLI\bin")) {
+        if (Test-Path (Join-Path $p 'gh.exe')) { $env:Path += ";$p"; break }
+    }
+}
+
 # 国内直连 GitHub 常被掐，能探测到本地代理就自动用上
 if (-not $Proxy) {
     $proxyOpen = $false
@@ -39,6 +46,15 @@ Write-Host '==> 2/5 提交身份（仅本仓库生效）'
 if (-not (git config user.email)) {
     git config user.name  '李宇翔'
     git config user.email $EmailDefault
+}
+
+# 私有仓库推送需要凭据；没配助手时会卡在 401 密码提示上
+if (Get-Command gh -ErrorAction SilentlyContinue) {
+    gh auth status *> $null
+    if ($LASTEXITCODE -eq 0) {
+        gh auth setup-git 2>$null
+        Write-Host '    已配置 git 凭据助手（gh）'
+    }
 }
 
 Write-Host '==> 3/5 提交'

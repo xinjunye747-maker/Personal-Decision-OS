@@ -37,6 +37,12 @@ if ! git config user.email >/dev/null 2>&1; then
   git config user.email "$EMAIL_DEFAULT"
 fi
 
+# 私有仓库推送需要凭据；没配助手时会卡在 401 密码提示上
+if command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1; then
+  gh auth setup-git >/dev/null 2>&1 || true
+  echo "    已配置 git 凭据助手（gh）"
+fi
+
 echo "==> 3/5 提交"
 git add -A
 if git diff --cached --quiet; then
