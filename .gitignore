@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets / credentials — never commit
+.env
+*.pem
+*.key
+oauth_creds.json
+google_accounts.json
+*credentials*.json
+*token*.json
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+.cursor/
+
+# Outputs
+*.log
+build/
+dist/
+node_modules/
+
+# Local scratch (not part of the profile)
+scratch/
+*.tmp
