@@ -1,4 +1,4 @@
-# deploy_to_github.ps1 — 把本目录同步到 GitHub 私有仓库（幂等，可反复执行）
+﻿# deploy_to_github.ps1 — 把本目录同步到 GitHub 私有仓库（幂等，可反复执行）
 # 用法： pwsh -File deploy_to_github.ps1 [-RepoName Personal-Decision-OS] [-Proxy http://127.0.0.1:10808]
 param(
     [string]$RepoName = 'Personal-Decision-OS',
