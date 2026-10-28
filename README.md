@@ -66,6 +66,15 @@ git config --global --get http.proxy        # 应为 http://127.0.0.1:10808
 - 稳妥做法：把仓库迁到非同步路径（如 `C:\dev\Personal-Decision-OS`），再把 OneDrive 里这份删掉；
 - 或者至少确认 OneDrive 没有在推送进行中锁住 `.git` 目录。
 
+### 常见故障
+
+| 症状 | 原因 | 处理 |
+|---|---|---|
+| `git push` 卡住几分钟后报 `fatal: unable to get password from user` | 私有仓库需要凭据，但 git 没配凭据助手，卡在密码提示 | `gh auth setup-git`（脚本已内置） |
+| `git push` 长时间无响应、最后超时 | 代理没开或节点挂了 | 先启动 v2rayN，`curl -x http://127.0.0.1:10808 https://github.com` 验证 |
+| `deploy_to_github.ps1` 报 `Unexpected token '}'` / 中文乱码 | Windows PowerShell 5.1 按 ANSI 读 UTF-8 脚本 | 脚本已存为 **UTF-8 with BOM**，改文件时别去掉 BOM |
+| `gh: 无法将"gh"项识别为命令` | gh 不在 PATH | 新开终端；或 `gh` 在 `C:\Program Files\GitHub CLI` |
+
 ---
 
 ## 快速开始（3 步）
