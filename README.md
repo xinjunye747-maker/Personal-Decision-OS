@@ -21,7 +21,50 @@
 | `SEU_EE_Master_Persona_System_Prompt.md` | 核心资产：导师人格提示词 + 100 问画像 + 40 天六级方案 + 决策矩阵 | ChatGPT 自定义指令 / Claude Project Instructions / Gemini 高级指令 |
 | `100_Questions_Interview_Framework.md` | 标准化 100 问自测与访谈模板（可复用、可开源） | 自我复盘、访谈他人、周期性重测 |
 | `.cursorrules` | 精简版人格规则（Cursor 每次对话自动加载） | Cursor / Windsurf 等 IDE Agent |
-| `deploy_to_github.sh` | 一键初始化 + 建私有仓库 + 推送 | 终端 |
+| `deploy_to_github.ps1` / `deploy_to_github.sh` | 一键初始化 + 建私有仓库 + 推送（幂等，可反复跑） | Windows PowerShell / Bash |
+
+---
+
+## 已部署状态
+
+| 项 | 值 |
+|---|---|
+| 仓库 | https://github.com/xinjunye747-maker/Personal-Decision-OS |
+| 可见性 | **Private**（含真实隐私画像，勿转公开） |
+| 默认分支 | `main` |
+| 首次提交 | `7a74f1d feat: init 100-question persona & master prompt v1.0` |
+
+### 日常三条命令
+
+```powershell
+# 看状态
+git status -sb
+
+# 改完内容后提交（版本号按上方规范递增）
+git commit -am "feat(v1.1.0): CET-6 出分 XXX，更新英语攻坚参数"
+
+# 推送
+git push
+```
+
+### 网络前提（重要）
+
+国内直连 `github.com:443` 会被掐断，本机已配好走 v2rayN 本地代理：
+
+```powershell
+git config --global --get http.proxy        # 应为 http://127.0.0.1:10808
+```
+
+- `git` 走的是全局配置，代理没开时 `git push` 会超时——先把 v2rayN 启动好再推。
+- `gh` 命令行不读 git 配置，需要临时环境变量：`$env:HTTPS_PROXY='http://127.0.0.1:10808'`。
+- 若代理端口变了（比如换成 7890），`git config --global http.proxy http://127.0.0.1:7890` 改一下即可。
+
+### 存储位置提醒
+
+本仓库当前位于 OneDrive 同步目录内。`.git` 被云盘并发同步是小概率但真实存在的损坏源：
+
+- 稳妥做法：把仓库迁到非同步路径（如 `C:\dev\Personal-Decision-OS`），再把 OneDrive 里这份删掉；
+- 或者至少确认 OneDrive 没有在推送进行中锁住 `.git` 目录。
 
 ---
 
